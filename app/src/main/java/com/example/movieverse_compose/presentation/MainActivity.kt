@@ -4,14 +4,20 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -38,30 +44,66 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun MainScreen() {
+    val pagerState = rememberPagerState(pageCount = {
+        4
+    })
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .verticalScroll(rememberScrollState())
             .background(color = backgroundColor)
             .padding(top = 44.sdp, bottom = 12.sdp)
     ) {
+        //Top Movies Row
         TextView(
             Modifier.padding(start = 16.sdp), text = "MovieVerse", textSize = 18, isTextBold = true
         )
+        HorizontalPager(state = pagerState) { page ->
+            // Our page content
+            MoviesCard(
+                modifier = Modifier
+                    .size(220.sdp, 280.sdp)
+                    .padding(16.sdp),
+                image = R.drawable.temp1
+            )
+        }
 
-        LazyRow {
-            items(4) {
-                TopMoviesCard(
+        //Upcoming Movies Row
+        TextView(Modifier.padding(start = 16.sdp, top = 8.sdp), text = "Upcomings", textSize = 14, isTextBold = true)
+        LazyRow(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 8.sdp, top = 8.sdp)
+        ) {
+            items(5){
+                MoviesCard(
                     modifier = Modifier
-                        .size(180.sdp, 240.sdp)
-                        .padding(16.sdp),
+                        .size(100.sdp, 130.sdp)
+                        .padding(start = 8.sdp),
                     image = R.drawable.temp1
                 )
             }
-
         }
 
+        //TV Shows Row
+        TextView(Modifier.padding(start = 16.sdp, top = 16.sdp), text = "TV Shows", textSize = 14, isTextBold = true)
+        LazyRow(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 8.sdp, top = 8.sdp)
+        ) {
+            items(5){
+                MoviesCard(
+                    modifier = Modifier
+                        .size(100.sdp, 130.sdp)
+                        .padding(start = 8.sdp),
+                    image = R.drawable.temp1
+                )
+            }
+        }
 
     }
 }
@@ -83,7 +125,7 @@ fun TextView(
 }
 
 @Composable
-fun TopMoviesCard(
+fun MoviesCard(
     modifier: Modifier = Modifier, image: Int = R.drawable.temp1
 ) {
 
