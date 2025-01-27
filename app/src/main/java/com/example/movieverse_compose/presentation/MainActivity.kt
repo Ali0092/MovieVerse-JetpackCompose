@@ -1,9 +1,12 @@
 package com.example.movieverse_compose.presentation
 
+import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -31,22 +34,42 @@ import com.example.movieverse_compose.ui.theme.backgroundColor
 import com.example.movieverse_compose.ui.theme.textColor
 import com.example.movieverse_compose.utils.sdp
 import com.example.movieverse_compose.utils.textSdp
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.launch
+import org.koin.androidx.compose.getViewModel
+import org.koin.androidx.compose.koinViewModel
 
 class MainActivity : ComponentActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+
         enableEdgeToEdge()
         setContent {
             MovieVerseComposeTheme {
                 MainScreen()
             }
         }
+
     }
 }
 
+@SuppressLint("CoroutineCreationDuringComposition")
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun MainScreen() {
+fun MainScreen(
+    viewModel: MainScreenViewModel = koinViewModel()
+) {
+
+  /*  viewModel.getPopularMovies()
+  CoroutineScope(IO).launch {
+      viewModel.popularMovies.collect{
+          Log.d("CheckingPopularActivityLogs", "onCreate: ${it.movies}")
+      }
+  }*/
+
     val pagerState = rememberPagerState(pageCount = {
         4
     })
@@ -128,13 +151,11 @@ fun TextView(
 fun MoviesCard(
     modifier: Modifier = Modifier, image: Int = R.drawable.temp1
 ) {
-
     Card(
         modifier = modifier, shape = RoundedCornerShape(15.sdp)
     ) {
         Image(painterResource(image), contentDescription = null, contentScale = ContentScale.Crop)
     }
-
 }
 
 //This preview will ruin the system's performance... so lets not use this....
@@ -142,6 +163,6 @@ fun MoviesCard(
 //@Composable
 //fun DefaultPreview() {
 //    MovieVerseComposeTheme {
-//        Greetings()
+//        MainScreen()
 //    }
 //}

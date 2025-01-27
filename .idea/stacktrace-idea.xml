@@ -3,8 +3,6 @@
   <component name="StacktraceSettings">
     <option name="folders">
       <set>
-        <option value="$PROJECT_DIR$/app/build/generated/res/resValues/androidTest/debug" />
-        <option value="$PROJECT_DIR$/app/build/generated/res/resValues/debug" />
         <option value="$PROJECT_DIR$/app/src/androidTest/java" />
         <option value="$PROJECT_DIR$/app/src/main/java" />
         <option value="$PROJECT_DIR$/app/src/main/res" />
@@ -13,7 +11,9 @@
     </option>
     <option name="packages">
       <set>
+        <option value="com.example.movieverse" />
         <option value="com.example.movieverse_compose" />
+        <option value="dagger.hilt.internal" />
       </set>
     </option>
   </component>

@@ -52,7 +52,20 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
-    implementation("com.intuit.sdp:sdp-android:1.1.0")
+    //SDP
+    implementation(libs.sdp.android)
+
+    //Livedata
+    implementation(libs.androidx.lifecycle.livedata.ktx)
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
+
+    // Retrofit
+    implementation(libs.retrofit)
+    implementation(libs.retrofit2.converter.gson)
+
+    implementation("io.insert-koin:koin-androidx-compose:3.2.0")
+
 
 
 }
+
