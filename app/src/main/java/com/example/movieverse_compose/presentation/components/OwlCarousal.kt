@@ -1,8 +1,7 @@
-package com.example.movieverse_compose.presentation
+package com.example.movieverse_compose.presentation.components
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -42,7 +41,7 @@ fun OwlCarousal() {
                 .width(230.sdp)
                 .clip(RoundedCornerShape(8.dp))
                 .carouselTransition(page, pagerState),
-            R.drawable.temp1
+            imageUrl = ""
         )
     }
 }
