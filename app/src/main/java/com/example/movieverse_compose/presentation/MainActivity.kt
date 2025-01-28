@@ -5,48 +5,30 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.gestures.Orientation
-import androidx.compose.foundation.gestures.rememberScrollableState
-import androidx.compose.foundation.gestures.scrollable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.pager.HorizontalPager
-import androidx.compose.foundation.pager.PageSize
-import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.scale
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
-import com.example.movieverse_compose.R
+import coil.compose.rememberAsyncImagePainter
 import com.example.movieverse_compose.ui.theme.MovieVerseComposeTheme
 import com.example.movieverse_compose.ui.theme.backgroundColor
 import com.example.movieverse_compose.ui.theme.textColor
 import com.example.movieverse_compose.utils.sdp
 import com.example.movieverse_compose.utils.textSdp
 import org.koin.androidx.compose.koinViewModel
-import kotlin.math.abs
-import kotlin.math.roundToInt
 
 class MainActivity : ComponentActivity() {
 
@@ -65,7 +47,6 @@ class MainActivity : ComponentActivity() {
 }
 
 @SuppressLint("CoroutineCreationDuringComposition")
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun MainScreen(
     viewModel: MainScreenViewModel = koinViewModel()
@@ -78,9 +59,6 @@ fun MainScreen(
         }
     }*/
 
-    val pagerState = rememberPagerState(pageCount = {
-        4
-    })
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -90,22 +68,14 @@ fun MainScreen(
     ) {
         //Top Movies Row
         TextView(
-            Modifier.padding(start = 16.sdp), text = "MovieVerse", textSize = 18, isTextBold = true
+            Modifier.padding(start = 16.sdp),
+            text = "MovieVerse",
+            textSize = 18,
+            isTextBold = true
         )
 
-        HorizontalPager(
-            state = pagerState,
-            contentPadding = PaddingValues(1.dp),
-            pageSize = PageSize.Fill,
-
-            ) { page ->
-            // Our page content
-            MoviesCard(
-                modifier = Modifier
-                    .size(220.sdp, 280.sdp)
-                    .padding(16.sdp), image = R.drawable.temp1
-            )
-        }
+        //Popular Movies Row
+        OwlCarousal()
 
         //Upcoming Movies Row
         TextView(
@@ -124,7 +94,7 @@ fun MainScreen(
                     modifier = Modifier
                         .size(100.sdp, 130.sdp)
                         .padding(start = 8.sdp),
-                    image = R.drawable.temp1
+                    imageUrl = "R.drawable.temp1"
                 )
             }
         }
@@ -146,7 +116,7 @@ fun MainScreen(
                     modifier = Modifier
                         .size(100.sdp, 130.sdp)
                         .padding(start = 8.sdp),
-                    image = R.drawable.temp1
+                    imageUrl = "R.drawable.temp1"
                 )
             }
         }
@@ -172,20 +142,15 @@ fun TextView(
 
 @Composable
 fun MoviesCard(
-    modifier: Modifier = Modifier, image: Int = R.drawable.temp1
+    modifier: Modifier = Modifier, imageUrl: String = ""
 ) {
     Card(
         modifier = modifier, shape = RoundedCornerShape(15.sdp)
     ) {
-        Image(painterResource(image), contentDescription = null, contentScale = ContentScale.Crop)
+        Image(
+            painter = rememberAsyncImagePainter(imageUrl),
+            contentDescription = null,
+            contentScale = ContentScale.FillBounds
+        )
     }
 }
-
-//This preview will ruin the system's performance... so lets not use this....
-//@Preview(showBackground = true)
-//@Composable
-//fun DefaultPreview() {
-//    MovieVerseComposeTheme {
-//        MainScreen()
-//    }
-//}

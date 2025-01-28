@@ -59,14 +59,23 @@ dependencies {
     implementation(libs.androidx.lifecycle.livedata.ktx)
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
 
-    // Retrofit
+    //Retrofit
     implementation(libs.retrofit)
     implementation(libs.retrofit2.converter.gson)
 
-    implementation("io.insert-koin:koin-androidx-compose:3.2.0")
+    //Volley
+    implementation(libs.volley)
 
-    implementation("com.google.accompanist:accompanist-pager:0.32.0")
-    implementation("com.google.accompanist:accompanist-pager-indicators:0.32.0")
+    //koin
+    implementation(libs.koin.androidx.compose)
+
+    //Pager (might works for indicators...)
+    implementation(libs.accompanist.pager)
+    implementation(libs.accompanist.pager.indicators)
+    
+    //Coil
+    implementation(libs.coil.compose)
+
 
 }
 
