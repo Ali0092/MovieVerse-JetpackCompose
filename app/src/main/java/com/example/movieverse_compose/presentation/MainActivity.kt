@@ -2,21 +2,26 @@ package com.example.movieverse_compose.presentation
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.activity.viewModels
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.rememberScrollableState
+import androidx.compose.foundation.gestures.scrollable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.PageSize
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -24,21 +29,24 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
 import com.example.movieverse_compose.R
 import com.example.movieverse_compose.ui.theme.MovieVerseComposeTheme
 import com.example.movieverse_compose.ui.theme.backgroundColor
 import com.example.movieverse_compose.ui.theme.textColor
 import com.example.movieverse_compose.utils.sdp
 import com.example.movieverse_compose.utils.textSdp
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers.IO
-import kotlinx.coroutines.launch
-import org.koin.androidx.compose.getViewModel
 import org.koin.androidx.compose.koinViewModel
+import kotlin.math.abs
+import kotlin.math.roundToInt
 
 class MainActivity : ComponentActivity() {
 
@@ -63,12 +71,12 @@ fun MainScreen(
     viewModel: MainScreenViewModel = koinViewModel()
 ) {
 
-  /*  viewModel.getPopularMovies()
-  CoroutineScope(IO).launch {
-      viewModel.popularMovies.collect{
-          Log.d("CheckingPopularActivityLogs", "onCreate: ${it.movies}")
-      }
-  }*/
+    /*  viewModel.getPopularMovies()
+    CoroutineScope(IO).launch {
+        viewModel.popularMovies.collect{
+            Log.d("CheckingPopularActivityLogs", "onCreate: ${it.movies}")
+        }
+    }*/
 
     val pagerState = rememberPagerState(pageCount = {
         4
@@ -84,24 +92,34 @@ fun MainScreen(
         TextView(
             Modifier.padding(start = 16.sdp), text = "MovieVerse", textSize = 18, isTextBold = true
         )
-        HorizontalPager(state = pagerState) { page ->
+
+        HorizontalPager(
+            state = pagerState,
+            contentPadding = PaddingValues(1.dp),
+            pageSize = PageSize.Fill,
+
+            ) { page ->
             // Our page content
             MoviesCard(
                 modifier = Modifier
                     .size(220.sdp, 280.sdp)
-                    .padding(16.sdp),
-                image = R.drawable.temp1
+                    .padding(16.sdp), image = R.drawable.temp1
             )
         }
 
         //Upcoming Movies Row
-        TextView(Modifier.padding(start = 16.sdp, top = 8.sdp), text = "Upcomings", textSize = 14, isTextBold = true)
+        TextView(
+            Modifier.padding(start = 16.sdp, top = 8.sdp),
+            text = "Upcomings",
+            textSize = 14,
+            isTextBold = true
+        )
         LazyRow(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(start = 8.sdp, top = 8.sdp)
         ) {
-            items(5){
+            items(5) {
                 MoviesCard(
                     modifier = Modifier
                         .size(100.sdp, 130.sdp)
@@ -112,13 +130,18 @@ fun MainScreen(
         }
 
         //TV Shows Row
-        TextView(Modifier.padding(start = 16.sdp, top = 16.sdp), text = "TV Shows", textSize = 14, isTextBold = true)
+        TextView(
+            Modifier.padding(start = 16.sdp, top = 16.sdp),
+            text = "TV Shows",
+            textSize = 14,
+            isTextBold = true
+        )
         LazyRow(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(start = 8.sdp, top = 8.sdp)
         ) {
-            items(5){
+            items(5) {
                 MoviesCard(
                     modifier = Modifier
                         .size(100.sdp, 130.sdp)

@@ -11,6 +11,7 @@
     </option>
     <option name="packages">
       <set>
+        <option value="com.example.composetweaks" />
         <option value="com.example.movieverse" />
         <option value="com.example.movieverse_compose" />
         <option value="dagger.hilt.internal" />
