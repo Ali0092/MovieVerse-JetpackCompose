@@ -55,7 +55,7 @@ fun MainScreen(
                     "popularMoviesState: movies are not empty ${popularMoviesState.movies.results}"
                 )
                 //Popular Movies Row
-                OwlCarousal(popularMoviesList = popularMoviesState.movies.results)
+                OwlCarousal(popularMoviesList = popularMoviesState.movies.results.subList(0,7))
             } else {
                 Log.d("popularMoviesStateLogs", "popularMoviesState: movies are empty ")
             }
@@ -63,7 +63,7 @@ fun MainScreen(
 
         //Upcoming Movies Row
         TextView(
-            Modifier.padding(start = 16.sdp, top = 8.sdp),
+            Modifier.padding(start = 16.sdp ),
             text = "Upcomings",
             textSize = 14,
             isTextBold = true

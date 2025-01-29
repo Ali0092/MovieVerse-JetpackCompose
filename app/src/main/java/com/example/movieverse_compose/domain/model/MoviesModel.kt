@@ -11,7 +11,7 @@ data class MoviesModel(
     data class Result(
         val id: Int = 0,
         val adult: Boolean = false,
-        val backdropPath: String = "",
+        val backdropPath: String? = null,
         val originalTitle: String = "",
         val overview: String = "",
         val popularity: Double = 0.0,
