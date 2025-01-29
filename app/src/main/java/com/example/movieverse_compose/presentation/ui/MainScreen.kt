@@ -1,23 +1,23 @@
 package com.example.movieverse_compose.presentation.ui
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import com.example.movieverse_compose.common.sdp
 import com.example.movieverse_compose.presentation.MainScreenViewModel
-import com.example.movieverse_compose.presentation.components.MoviesCard
+import com.example.movieverse_compose.presentation.components.MoviesRow
 import com.example.movieverse_compose.presentation.components.OwlCarousal
 import com.example.movieverse_compose.presentation.components.TextView
 import com.example.movieverse_compose.ui.theme.backgroundColor
-import com.example.movieverse_compose.utils.sdp
 import org.koin.androidx.compose.koinViewModel
 
 @SuppressLint("CoroutineCreationDuringComposition")
@@ -25,13 +25,9 @@ import org.koin.androidx.compose.koinViewModel
 fun MainScreen(
     viewModel: MainScreenViewModel = koinViewModel()
 ) {
-
-    /*  viewModel.getPopularMovies()
-    CoroutineScope(IO).launch {
-        viewModel.popularMovies.collect{
-            Log.d("CheckingPopularActivityLogs", "onCreate: ${it.movies}")
-        }
-    }*/
+    val popularMoviesState by viewModel.popularMovies.collectAsState()
+    val upcomingMoviesState by viewModel.upcomingMovies.collectAsState()
+    val tvShowsMoviesState by viewModel.tvShows.collectAsState()
 
     Column(
         modifier = Modifier
@@ -45,8 +41,25 @@ fun MainScreen(
             Modifier.padding(start = 16.sdp), text = "MovieVerse", textSize = 18, isTextBold = true
         )
 
-        //Popular Movies Row
-        OwlCarousal()
+        if (popularMoviesState.isLoading) {
+            Log.d(
+                "popularMoviesStateLogs",
+                "popularMoviesState: loading movies ${popularMoviesState.error}"
+            )
+        } else if (popularMoviesState.error?.isNotEmpty() == true) {
+            Log.d("popularMoviesStateLogs", "popularMoviesState: its an error ${popularMoviesState.error}")
+        } else {
+            if (popularMoviesState.movies.results.isNotEmpty()) {
+                Log.d(
+                    "popularMoviesStateLogs",
+                    "popularMoviesState: movies are not empty ${popularMoviesState.movies.results}"
+                )
+                //Popular Movies Row
+                OwlCarousal(popularMoviesList = popularMoviesState.movies.results)
+            } else {
+                Log.d("popularMoviesStateLogs", "popularMoviesState: movies are empty ")
+            }
+        }
 
         //Upcoming Movies Row
         TextView(
@@ -55,18 +68,24 @@ fun MainScreen(
             textSize = 14,
             isTextBold = true
         )
-        LazyRow(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(start = 8.sdp, top = 8.sdp)
-        ) {
-            items(5) {
-                MoviesCard(
-                    modifier = Modifier
-                        .size(100.sdp, 130.sdp)
-                        .padding(start = 8.sdp),
-                    imageUrl = "R.drawable.temp1"
+
+        if (upcomingMoviesState.isLoading) {
+            Log.d(
+                "popularMoviesStateLogs",
+                "upcomingMoviesState: loading movies ${upcomingMoviesState.error}"
+            )
+        } else if (upcomingMoviesState.error?.isNotEmpty() == true) {
+            Log.d("popularMoviesStateLogs", "upcomingMoviesState: its an error ${upcomingMoviesState.error}")
+        } else {
+            if (upcomingMoviesState.movies.results.isNotEmpty()) {
+                Log.d(
+                    "popularMoviesStateLogs",
+                    "upcomingMoviesState: movies are not empty ${upcomingMoviesState.movies.results}"
                 )
+                //Popular Movies Row
+                MoviesRow(moviesList = upcomingMoviesState.movies.results)
+            } else {
+                Log.d("popularMoviesStateLogs", "upcomingMoviesState: movies are empty ")
             }
         }
 
@@ -77,18 +96,24 @@ fun MainScreen(
             textSize = 14,
             isTextBold = true
         )
-        LazyRow(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(start = 8.sdp, top = 8.sdp)
-        ) {
-            items(5) {
-                MoviesCard(
-                    modifier = Modifier
-                        .size(100.sdp, 130.sdp)
-                        .padding(start = 8.sdp),
-                    imageUrl = "R.drawable.temp1"
+
+        if (tvShowsMoviesState.isLoading) {
+            Log.d(
+                "popularMoviesStateLogs",
+                "tvShowsMoviesState: loading movies ${tvShowsMoviesState.error}"
+            )
+        } else if (tvShowsMoviesState.error?.isNotEmpty() == true) {
+            Log.d("popularMoviesStateLogs", "tvShowsMoviesState: its an error ${tvShowsMoviesState.error}")
+        } else {
+            if (tvShowsMoviesState.movies.results.isNotEmpty()) {
+                Log.d(
+                    "popularMoviesStateLogs",
+                    "tvShowsMoviesState: movies are not empty ${tvShowsMoviesState.movies.results}"
                 )
+                //Popular Movies Row
+                MoviesRow(moviesList = tvShowsMoviesState.movies.results)
+            } else {
+                Log.d("popularMoviesStateLogs", "tvShowsMoviesState: movies are empty ")
             }
         }
 

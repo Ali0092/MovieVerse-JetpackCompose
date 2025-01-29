@@ -37,6 +37,11 @@ class MainScreenViewModel (
         _selectedMovie.value = movie
     }
 
+    init {
+        getPopularMovies()
+        getUpcomingMovies()
+        getTVShows()
+    }
 
     fun getPopularMovies() {
         getPopularMoviesListUseCase().onEach { viewState ->

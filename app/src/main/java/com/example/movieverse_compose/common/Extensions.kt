@@ -1,4 +1,4 @@
-package com.example.movieverse_compose.utils
+package com.example.movieverse_compose.common
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext

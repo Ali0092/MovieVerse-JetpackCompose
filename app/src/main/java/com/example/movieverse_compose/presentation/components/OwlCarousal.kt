@@ -16,15 +16,17 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.lerp
-import com.example.movieverse_compose.R
-import com.example.movieverse_compose.utils.sdp
+import com.example.movieverse_compose.common.sdp
+import com.example.movieverse_compose.domain.model.MoviesModel
 import kotlin.math.absoluteValue
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun OwlCarousal() {
-    val pagerState = rememberPagerState(pageCount = { 3 })
+fun OwlCarousal(
+    popularMoviesList: List<MoviesModel.Result> = emptyList(),
+) {
 
+    val pagerState = rememberPagerState(pageCount = { popularMoviesList.size })
 
     HorizontalPager(
         modifier = Modifier
@@ -41,7 +43,7 @@ fun OwlCarousal() {
                 .width(230.sdp)
                 .clip(RoundedCornerShape(8.dp))
                 .carouselTransition(page, pagerState),
-            imageUrl = ""
+            imageUrl = "https://image.tmdb.org/t/p/w500/${popularMoviesList[page].posterPath}"
         )
     }
 }
