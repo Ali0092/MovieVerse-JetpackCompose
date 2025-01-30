@@ -11,8 +11,13 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import com.example.movieverse_compose.common.sdp
+import com.example.movieverse_compose.domain.model.MoviesModel
 import com.example.movieverse_compose.presentation.MainScreenViewModel
 import com.example.movieverse_compose.presentation.components.MoviesRow
 import com.example.movieverse_compose.presentation.components.OwlCarousal
@@ -20,7 +25,7 @@ import com.example.movieverse_compose.presentation.components.TextView
 import com.example.movieverse_compose.ui.theme.backgroundColor
 import org.koin.androidx.compose.koinViewModel
 
-@SuppressLint("CoroutineCreationDuringComposition")
+@SuppressLint("CoroutineCreationDuringComposition", "MutableCollectionMutableState")
 @Composable
 fun MainScreen(
     viewModel: MainScreenViewModel = koinViewModel()
@@ -28,6 +33,16 @@ fun MainScreen(
     val popularMoviesState by viewModel.popularMovies.collectAsState()
     val upcomingMoviesState by viewModel.upcomingMovies.collectAsState()
     val tvShowsMoviesState by viewModel.tvShows.collectAsState()
+
+    var isPopularMoviesLoading by remember { mutableStateOf(true) }
+    var popularMoviesList by remember { mutableStateOf(listOf<MoviesModel.Result>()) }
+
+    var isUpcomingMoviesLoading by remember { mutableStateOf(true) }
+    var upcomingMoviesList by remember { mutableStateOf(listOf<MoviesModel.Result>()) }
+
+    var isTvShowsLoading by remember { mutableStateOf(true) }
+    var tvShowsList by remember { mutableStateOf(listOf<MoviesModel.Result>()) }
+
 
     Column(
         modifier = Modifier
@@ -41,23 +56,21 @@ fun MainScreen(
             Modifier.padding(start = 16.sdp), text = "MovieVerse", textSize = 18, isTextBold = true
         )
 
+        OwlCarousal(isLoadingData = isPopularMoviesLoading, popularMoviesList = popularMoviesList)
+
         if (popularMoviesState.isLoading) {
-            Log.d(
-                "popularMoviesStateLogs",
-                "popularMoviesState: loading movies ${popularMoviesState.error}"
-            )
+            //its loading
+            isPopularMoviesLoading = true
         } else if (popularMoviesState.error?.isNotEmpty() == true) {
-            Log.d("popularMoviesStateLogs", "popularMoviesState: its an error ${popularMoviesState.error}")
+            //its an error
+            isPopularMoviesLoading = true
         } else {
             if (popularMoviesState.movies.results.isNotEmpty()) {
-                Log.d(
-                    "popularMoviesStateLogs",
-                    "popularMoviesState: movies are not empty ${popularMoviesState.movies.results}"
-                )
                 //Popular Movies Row
-                OwlCarousal(popularMoviesList = popularMoviesState.movies.results.subList(0,7))
+                isPopularMoviesLoading = false
+                popularMoviesList = popularMoviesState.movies.results.subList(0,6)
             } else {
-                Log.d("popularMoviesStateLogs", "popularMoviesState: movies are empty ")
+                isPopularMoviesLoading = true
             }
         }
 
@@ -69,23 +82,18 @@ fun MainScreen(
             isTextBold = true
         )
 
+        MoviesRow(isLoadingData = isUpcomingMoviesLoading, moviesList = upcomingMoviesList)
+
         if (upcomingMoviesState.isLoading) {
-            Log.d(
-                "popularMoviesStateLogs",
-                "upcomingMoviesState: loading movies ${upcomingMoviesState.error}"
-            )
+            isUpcomingMoviesLoading = true
         } else if (upcomingMoviesState.error?.isNotEmpty() == true) {
-            Log.d("popularMoviesStateLogs", "upcomingMoviesState: its an error ${upcomingMoviesState.error}")
+            isUpcomingMoviesLoading = true
         } else {
             if (upcomingMoviesState.movies.results.isNotEmpty()) {
-                Log.d(
-                    "popularMoviesStateLogs",
-                    "upcomingMoviesState: movies are not empty ${upcomingMoviesState.movies.results}"
-                )
-                //Popular Movies Row
-                MoviesRow(moviesList = upcomingMoviesState.movies.results)
+               isUpcomingMoviesLoading = false
+               upcomingMoviesList = upcomingMoviesState.movies.results.subList(0,6)
             } else {
-                Log.d("popularMoviesStateLogs", "upcomingMoviesState: movies are empty ")
+                isUpcomingMoviesLoading = true
             }
         }
 
@@ -97,23 +105,18 @@ fun MainScreen(
             isTextBold = true
         )
 
+        MoviesRow(isLoadingData = isTvShowsLoading, moviesList = tvShowsList)
+
         if (tvShowsMoviesState.isLoading) {
-            Log.d(
-                "popularMoviesStateLogs",
-                "tvShowsMoviesState: loading movies ${tvShowsMoviesState.error}"
-            )
+            isTvShowsLoading = true
         } else if (tvShowsMoviesState.error?.isNotEmpty() == true) {
-            Log.d("popularMoviesStateLogs", "tvShowsMoviesState: its an error ${tvShowsMoviesState.error}")
+            isTvShowsLoading = true
         } else {
             if (tvShowsMoviesState.movies.results.isNotEmpty()) {
-                Log.d(
-                    "popularMoviesStateLogs",
-                    "tvShowsMoviesState: movies are not empty ${tvShowsMoviesState.movies.results}"
-                )
-                //Popular Movies Row
-                MoviesRow(moviesList = tvShowsMoviesState.movies.results)
+                isTvShowsLoading = false
+                tvShowsList = tvShowsMoviesState.movies.results.subList(0,6)
             } else {
-                Log.d("popularMoviesStateLogs", "tvShowsMoviesState: movies are empty ")
+                isTvShowsLoading = true
             }
         }
 

@@ -1,5 +1,6 @@
 package com.example.movieverse_compose.presentation.components
 
+import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -32,11 +33,13 @@ import kotlin.math.absoluteValue
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun OwlCarousal(
+    isLoadingData: Boolean = false,
     popularMoviesList: List<MoviesModel.Result> = emptyList(),
 ) {
+    val pagerState = rememberPagerState(pageCount = { if (!isLoadingData)  popularMoviesList.size else 3 })
 
-    val pagerState = rememberPagerState(pageCount = { popularMoviesList.size })
-
+    Log.d("OwlCarousalasdfasdsdf", "isLoadingData: ${isLoadingData}")
+    Log.d("OwlCarousalasdfasdsdf", "popularMoviesList: ${popularMoviesList}")
 
     Column(
         modifier = Modifier
@@ -55,14 +58,12 @@ fun OwlCarousal(
                     .width(250.sdp)
                     .clip(RoundedCornerShape(8.dp))
                     .carouselTransition(page, pagerState),
-                imageUrl = "https://image.tmdb.org/t/p/w500/${popularMoviesList[page].posterPath}"
+                imageUrl = if (isLoadingData) "" else  "https://image.tmdb.org/t/p/w500/${popularMoviesList[page].posterPath}"
             )
         }
         Spacer(modifier = Modifier.padding(8.sdp))
-
         DotIndicator(popularMoviesList.size,pagerState.currentPage)
     }
-
 
 }
 

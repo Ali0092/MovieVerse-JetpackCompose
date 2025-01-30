@@ -54,7 +54,8 @@ fun MoviesCard(
 
 @Composable
 fun MoviesRow(
-    moviesList: List<MoviesModel.Result> = emptyList()
+    isLoadingData: Boolean = false,
+    moviesList: List<MoviesModel.Result> = listOf()
 ){
 
     LazyRow(
@@ -62,14 +63,26 @@ fun MoviesRow(
             .fillMaxWidth()
             .padding(start = 8.sdp, top = 8.sdp)
     ) {
-        items(moviesList) { movies->
-            MoviesCard(
-                modifier = Modifier
-                    .size(100.sdp, 130.sdp)
-                    .padding(start = 8.sdp),
-                imageUrl = "https://image.tmdb.org/t/p/w500/${movies.posterPath}"
-            )
+        if (isLoadingData){
+            items(3){
+                MoviesCard(
+                    modifier = Modifier
+                        .size(100.sdp, 130.sdp)
+                        .padding(start = 8.sdp),
+                    imageUrl =""
+                )
+            }
+        }else{
+            items(moviesList) { movies->
+                MoviesCard(
+                    modifier = Modifier
+                        .size(100.sdp, 130.sdp)
+                        .padding(start = 8.sdp),
+                    imageUrl = "https://image.tmdb.org/t/p/w500/${movies.posterPath}"
+                )
+            }
         }
+
     }
 
 }
