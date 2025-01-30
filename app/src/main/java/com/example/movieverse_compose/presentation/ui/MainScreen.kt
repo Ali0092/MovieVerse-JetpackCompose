@@ -16,10 +16,14 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.example.movieverse_compose.common.sdp
 import com.example.movieverse_compose.domain.model.MoviesModel
 import com.example.movieverse_compose.presentation.MainScreenViewModel
 import com.example.movieverse_compose.presentation.components.MoviesRow
+import com.example.movieverse_compose.presentation.components.NavigationItem
 import com.example.movieverse_compose.presentation.components.OwlCarousal
 import com.example.movieverse_compose.presentation.components.TextView
 import com.example.movieverse_compose.ui.theme.backgroundColor
@@ -28,6 +32,7 @@ import org.koin.androidx.compose.koinViewModel
 @SuppressLint("CoroutineCreationDuringComposition", "MutableCollectionMutableState")
 @Composable
 fun MainScreen(
+    navController: NavHostController = rememberNavController(),
     viewModel: MainScreenViewModel = koinViewModel()
 ) {
     val popularMoviesState by viewModel.popularMovies.collectAsState()
@@ -56,7 +61,10 @@ fun MainScreen(
             Modifier.padding(start = 16.sdp), text = "MovieVerse", textSize = 18, isTextBold = true
         )
 
-        OwlCarousal(isLoadingData = isPopularMoviesLoading, popularMoviesList = popularMoviesList)
+        OwlCarousal(isLoadingData = isPopularMoviesLoading, popularMoviesList = popularMoviesList){ selectedMovie->
+            viewModel.setSelectedMovie(selectedMovie)
+            navController.navigate(NavigationItem.Details.route)
+        }
 
         if (popularMoviesState.isLoading) {
             //its loading

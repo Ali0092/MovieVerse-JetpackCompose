@@ -2,6 +2,7 @@ package com.example.movieverse_compose.presentation.components
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -29,11 +30,11 @@ import com.example.movieverse_compose.common.sdp
 import com.example.movieverse_compose.domain.model.MoviesModel
 import kotlin.math.absoluteValue
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun OwlCarousal(
     isLoadingData: Boolean = false,
     popularMoviesList: List<MoviesModel.Result> = emptyList(),
+    onClicked: (MoviesModel.Result)-> Unit
 ) {
     val pagerState =
         rememberPagerState(pageCount = { if (!isLoadingData) popularMoviesList.size else 3 })
@@ -51,6 +52,9 @@ fun OwlCarousal(
             //defined in ClubbedPhotos.kt.
             MoviesCard(
                 modifier = Modifier
+                    .clickable {
+                        onClicked(popularMoviesList[page])
+                    }
                     .height(280.sdp)
                     .width(250.sdp)
                     .clip(RoundedCornerShape(8.dp))
