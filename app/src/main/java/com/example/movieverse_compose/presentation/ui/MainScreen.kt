@@ -33,7 +33,7 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun MainScreen(
     navController: NavHostController = rememberNavController(),
-    viewModel: MainScreenViewModel = koinViewModel()
+    viewModel: MainScreenViewModel
 ) {
     val popularMoviesState by viewModel.popularMovies.collectAsState()
     val upcomingMoviesState by viewModel.upcomingMovies.collectAsState()
@@ -62,7 +62,7 @@ fun MainScreen(
         )
 
         OwlCarousal(isLoadingData = isPopularMoviesLoading, popularMoviesList = popularMoviesList){ selectedMovie->
-            viewModel.setSelectedMovie(selectedMovie)
+            viewModel.setMovie(selectedMovie)
             navController.navigate(NavigationItem.Details.route)
         }
 
@@ -90,7 +90,10 @@ fun MainScreen(
             isTextBold = true
         )
 
-        MoviesRow(isLoadingData = isUpcomingMoviesLoading, moviesList = upcomingMoviesList)
+        MoviesRow(isLoadingData = isUpcomingMoviesLoading, moviesList = upcomingMoviesList){ selectedMovie->
+            viewModel.setMovie(selectedMovie)
+            navController.navigate(NavigationItem.Details.route)
+        }
 
         if (upcomingMoviesState.isLoading) {
             isUpcomingMoviesLoading = true
@@ -113,7 +116,10 @@ fun MainScreen(
             isTextBold = true
         )
 
-        MoviesRow(isLoadingData = isTvShowsLoading, moviesList = tvShowsList)
+        MoviesRow(isLoadingData = isTvShowsLoading, moviesList = tvShowsList){selectedMovie->
+            viewModel.setMovie(selectedMovie)
+            navController.navigate(NavigationItem.Details.route)
+        }
 
         if (tvShowsMoviesState.isLoading) {
             isTvShowsLoading = true

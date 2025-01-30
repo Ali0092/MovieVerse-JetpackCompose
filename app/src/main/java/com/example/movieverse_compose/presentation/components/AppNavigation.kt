@@ -1,5 +1,7 @@
 package com.example.movieverse_compose.presentation.components
 
+
+
 enum class Screen {
     MAIN,
     DETAIL,

@@ -1,6 +1,10 @@
 package com.example.movieverse_compose.presentation
 
 
+import android.util.Log
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -11,6 +15,7 @@ import com.example.movieverse_compose.domain.user_cases.GetPopularMoviesListUseC
 import com.example.movieverse_compose.domain.user_cases.GetTVShowsListUseCase
 import com.example.movieverse_compose.domain.user_cases.GetUpcomingMoviesListUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
@@ -29,12 +34,23 @@ class MainScreenViewModel (
     private val _tvShows = MutableStateFlow(MoviesViewState())
     val tvShows: MutableStateFlow<MoviesViewState> = _tvShows
 
-    private var _selectedMovie: MutableLiveData<MoviesModel.Result> = MutableLiveData()
-    val selectedMovie: LiveData<MoviesModel.Result> = _selectedMovie
+//    private var _selectedMovie: MutableLiveData<MoviesModel.Result> = MutableLiveData()
+//    var selectedMovie: LiveData<MoviesModel.Result> = _selectedMovie
+//
+//
+////    var selectedMovie by mutableStateOf(MoviesModel.Result())
+//
+//    fun setSelectedMovieValue(movie: MoviesModel.Result) {
+//        _selectedMovie.value = movie
+//    }
 
+    private val _selectedMovie = MutableStateFlow(MoviesModel.Result())
+    val selectedMovie = _selectedMovie.asStateFlow()
 
-    fun setSelectedMovie(movie: MoviesModel.Result) {
+    fun setMovie(movie: MoviesModel.Result) {
+
         _selectedMovie.value = movie
+        Log.d("fasdfsdfsdfsdsdfsdfaafs", "setMovie: ${_selectedMovie.value}")
     }
 
     init {

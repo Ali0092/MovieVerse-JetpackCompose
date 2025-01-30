@@ -1,6 +1,7 @@
 package com.example.movieverse_compose.presentation.components
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -57,7 +58,8 @@ fun MoviesCard(
 @Composable
 fun MoviesRow(
     isLoadingData: Boolean = false,
-    moviesList: List<MoviesModel.Result> = listOf()
+    moviesList: List<MoviesModel.Result> = listOf(),
+    onClicked: (MoviesModel.Result)-> Unit
 ){
 
     LazyRow(
@@ -78,6 +80,9 @@ fun MoviesRow(
             items(moviesList) { movies->
                 MoviesCard(
                     modifier = Modifier
+                        .clickable {
+                            onClicked(movies)
+                        }
                         .size(100.sdp, 130.sdp)
                         .padding(start = 8.sdp),
                     imageUrl = "https://image.tmdb.org/t/p/w500/${movies.posterPath}"

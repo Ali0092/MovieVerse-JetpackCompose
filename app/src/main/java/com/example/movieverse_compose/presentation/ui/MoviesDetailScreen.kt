@@ -1,6 +1,5 @@
 package com.example.movieverse_compose.presentation.ui
 
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -18,6 +17,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Card
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -31,13 +32,14 @@ import com.example.movieverse_compose.presentation.components.MoviesCard
 import com.example.movieverse_compose.presentation.components.TextView
 import com.example.movieverse_compose.ui.theme.backgroundColor
 import com.example.movieverse_compose.ui.theme.greyColor
-import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun MoviesDetailScreen(
-    navHostController: NavHostController = rememberNavController(),
-    viewModel: MainScreenViewModel = koinViewModel()
+   navController: NavHostController = rememberNavController(),
+   viewModel: MainScreenViewModel ,
 ) {
+
+    val movie by viewModel.selectedMovie.collectAsState()
 
     Column(
         modifier = Modifier
@@ -56,7 +58,7 @@ fun MoviesDetailScreen(
                 modifier = Modifier
                     .size(36.sdp)
                     .clickable {
-                        navHostController.popBackStack()
+                        navController.popBackStack()
                     },
                 backgroundColor = greyColor,
                 shape = RoundedCornerShape(8.sdp)
@@ -75,22 +77,20 @@ fun MoviesDetailScreen(
             }
 
         }
-
         //Movie Image
         MoviesCard(modifier = Modifier
             .fillMaxWidth()
             .height(320.sdp)
-            .padding(top = 12.sdp))
+            .padding(top = 12.sdp),
+            imageUrl = "https://image.tmdb.org/t/p/w500/${movie.posterPath}")
 
         TextView(modifier = Modifier
             .fillMaxWidth()
-            .padding(top = 16.sdp), text = "Aladin", textSize = 21, isTextBold = true)
+            .padding(top = 16.sdp), text = movie.title, textSize = 21, isTextBold = true)
 
         TextView(modifier = Modifier
             .fillMaxWidth()
-            .padding(top = 8.sdp), text = "To fetch documents from Firestore where the document IDs match the values in editorsInoc: List<String>, and keep a real-time snapshot listener, you need to use multiple snapshot listeners—one for each document in the list.", textSize = 14, isTextBold = false)
-
-
+            .padding(top = 8.sdp), text = movie.overview, textSize = 14, isTextBold = false)
 
     }
 

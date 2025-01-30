@@ -7,6 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.movieverse_compose.presentation.ui.MainScreen
 import com.example.movieverse_compose.presentation.ui.MoviesDetailScreen
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun AppNavHost(
@@ -15,15 +16,17 @@ fun AppNavHost(
     startDestination: String = NavigationItem.Main.route
 ) {
 
-    NavHost(modifier = modifier, navController = navController, startDestination = startDestination) {
+    NavHost(
+        modifier = modifier, navController = navController, startDestination = startDestination
+    ) {
 
         composable(NavigationItem.Main.route) {
-            MainScreen(navController)
+            MainScreen(navController = navController, viewModel = koinViewModel())
         }
 
-        composable(NavigationItem.Details.route) {
-            MoviesDetailScreen(navController)
+        composable(route = NavigationItem.Details.route) {
+            MoviesDetailScreen(navController = navController, viewModel = koinViewModel())
         }
+
     }
-
 }
