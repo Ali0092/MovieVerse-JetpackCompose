@@ -4,7 +4,10 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.tooling.preview.Preview
 import com.example.movieverse_compose.presentation.ui.MainScreen
+import com.example.movieverse_compose.presentation.ui.MoviesDetailScreen
 import com.example.movieverse_compose.ui.theme.MovieVerseComposeTheme
 
 class MainActivity : ComponentActivity() {
@@ -15,8 +18,17 @@ class MainActivity : ComponentActivity() {
         setContent {
             MovieVerseComposeTheme {
                 MainScreen()
+                MoviesDetailScreen()
             }
         }
     }
 
+}
+
+@Preview(showBackground = true)
+@Composable
+fun PreviewScr(){
+    MovieVerseComposeTheme {
+        MoviesDetailScreen()
+    }
 }

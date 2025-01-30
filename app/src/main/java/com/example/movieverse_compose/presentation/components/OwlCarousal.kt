@@ -1,6 +1,5 @@
 package com.example.movieverse_compose.presentation.components
 
-import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -36,10 +35,8 @@ fun OwlCarousal(
     isLoadingData: Boolean = false,
     popularMoviesList: List<MoviesModel.Result> = emptyList(),
 ) {
-    val pagerState = rememberPagerState(pageCount = { if (!isLoadingData)  popularMoviesList.size else 3 })
-
-    Log.d("OwlCarousalasdfasdsdf", "isLoadingData: ${isLoadingData}")
-    Log.d("OwlCarousalasdfasdsdf", "popularMoviesList: ${popularMoviesList}")
+    val pagerState =
+        rememberPagerState(pageCount = { if (!isLoadingData) popularMoviesList.size else 3 })
 
     Column(
         modifier = Modifier
@@ -58,18 +55,19 @@ fun OwlCarousal(
                     .width(250.sdp)
                     .clip(RoundedCornerShape(8.dp))
                     .carouselTransition(page, pagerState),
-                imageUrl = if (isLoadingData) "" else  "https://image.tmdb.org/t/p/w500/${popularMoviesList[page].posterPath}"
+                imageUrl = if (isLoadingData) "" else "https://image.tmdb.org/t/p/w500/${popularMoviesList[page].posterPath}"
             )
         }
         Spacer(modifier = Modifier.padding(8.sdp))
-        DotIndicator(popularMoviesList.size,pagerState.currentPage)
+        DotIndicator(popularMoviesList.size, pagerState.currentPage)
     }
 
 }
 
 @OptIn(ExperimentalFoundationApi::class)
 fun Modifier.carouselTransition(page: Int, pagerState: PagerState) = graphicsLayer {
-    val pageOffset = ((pagerState.currentPage - page) + pagerState.currentPageOffsetFraction).absoluteValue
+    val pageOffset =
+        ((pagerState.currentPage - page) + pagerState.currentPageOffsetFraction).absoluteValue
 
     val transformation = lerp(
         start = 0.80f, stop = 1f, fraction = 1f - pageOffset.coerceIn(0f, 1f)
@@ -80,12 +78,10 @@ fun Modifier.carouselTransition(page: Int, pagerState: PagerState) = graphicsLay
 
 @Composable
 fun DotIndicator(
-    pageCount: Int,
-    currentPage: Int
+    pageCount: Int, currentPage: Int
 ) {
     Row(
-        horizontalArrangement = Arrangement.Center,
-        modifier = Modifier.fillMaxWidth()
+        horizontalArrangement = Arrangement.Center, modifier = Modifier.fillMaxWidth()
     ) {
         repeat(pageCount) { index ->
             Box(
