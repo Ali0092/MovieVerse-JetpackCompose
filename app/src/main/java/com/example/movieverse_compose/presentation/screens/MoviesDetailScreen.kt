@@ -47,7 +47,7 @@ fun MoviesDetailScreen(
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
             .background(color = backgroundColor)
-            .padding(top = 44.sdp, bottom = 12.sdp, start = 12.sdp, end = 12.sdp)
+            .padding(top = 32.sdp, bottom = 12.sdp, start = 12.sdp, end = 12.sdp)
 
     ) {
         //top row....

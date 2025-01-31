@@ -41,7 +41,7 @@ fun OwlCarousal(
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(top = 24.sdp, bottom = 16.sdp)
+            .padding(top = 16.sdp, bottom = 16.sdp)
     ) {
         HorizontalPager(
             state = pagerState,

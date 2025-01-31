@@ -48,7 +48,7 @@ fun MainScreen(
         )
         OwlCarousal(isLoadingData = popularMoviesState.isLoading,
             popularMoviesList = popularMoviesState.movies.results.takeIf { it.isNotEmpty() }
-                ?.subList(0, 6) ?: emptyList()) { selectedMovie ->
+                ?.subList(0, 10) ?: emptyList()) { selectedMovie ->
             viewModel.setMovie(selectedMovie)
             navController.navigate(NavigationItem.Details.route)
         }
