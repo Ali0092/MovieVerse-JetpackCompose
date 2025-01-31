@@ -4,36 +4,39 @@
 Welcome to MovieVerse, a beautifully crafted Android application built using Clean Architecture, Jetpack Compose, and MVVM. This project follows best practices for modern Android development, integrating Flow, State Management, and Koin for Dependency Injection.
 
 🛠️ Tech Stack
-----
+---
 
-**Kotlin** - Modern, concise, and type-safe programming language.
+- **Jetpack Compose** - Declarative UI toolkit for building native Android apps.
 
-**Jetpack Compose** - Declarative UI toolkit for building native Android apps.
+- **MVVM** - Architecture pattern for better separation of concerns.
 
-**MVVM** - Architecture pattern for better separation of concerns.
+- **Koin** - Lightweight and easy-to-use Dependency Injection framework.
 
-**Koin** - Lightweight and easy-to-use Dependency Injection framework.
+- **Flow** - Reactive data streams for efficient state management.
 
-**Flow** - Reactive data streams for efficient state management.
+- **Retrofit** - Networking library for API calls.
 
-**Retrofit** - Networking library for API calls.
-
-**Coil** - Fast and lightweight image loading.
+- **Coil** - Fast and lightweight image loading.
 
 
 🏗️ Architecture Overview
-----
+---
 
-This project follows Uncle Bob's Clean Architecture principles:
+- **Presentation Layer:** Jetpack Compose UI + ViewModel for state management.
 
-Presentation Layer: Jetpack Compose UI + ViewModel for state management.
+- **Domain Layer:** Business logic (UseCases, Models, Repository interfaces).
 
-Domain Layer: Business logic (UseCases, Models, Repository interfaces).
-
-Data Layer: Manages API & database interactions (Retrofit, Room, DTO mapping).
+- **Data Layer:** Manages API & database interactions (Retrofit, Room, DTO mapping).
 
 
-📸 Screenshots 
-----
+📸 Screenshots
+---
+<div style="display: flex; gap: 50px;">
+  <img src="https://github.com/user-attachments/assets/754c7c4d-1173-4741-aede-d7a7dc569808" alt="Home Screen" width="300"/>
+  <img src="https://github.com/user-attachments/assets/7dd68b44-92d3-4305-8cbc-6cd8804b9aa9" alt="Movies Details Screen" width="300"/>
+</div>
 
-Showcase some amazing UI designs and features
+
+---
+Happy Coding! 🎬
+
