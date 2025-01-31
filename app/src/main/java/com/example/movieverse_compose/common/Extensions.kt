@@ -9,6 +9,10 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 
+/*
+* SDP extension functions for textSize and Composable sizes
+*/
+
 @Composable
 private fun Int.sdpGet(): Dp {
 

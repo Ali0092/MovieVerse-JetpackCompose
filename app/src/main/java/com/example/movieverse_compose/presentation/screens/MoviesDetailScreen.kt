@@ -1,4 +1,4 @@
-package com.example.movieverse_compose.presentation.ui
+package com.example.movieverse_compose.presentation.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -22,21 +22,22 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.movieverse_compose.R
 import com.example.movieverse_compose.common.sdp
-import com.example.movieverse_compose.presentation.MainScreenViewModel
 import com.example.movieverse_compose.presentation.components.MoviesCard
 import com.example.movieverse_compose.presentation.components.TextView
+import com.example.movieverse_compose.presentation.viewmodel.MainScreenViewModel
 import com.example.movieverse_compose.ui.theme.backgroundColor
 import com.example.movieverse_compose.ui.theme.greyColor
 
 @Composable
 fun MoviesDetailScreen(
-   navController: NavHostController = rememberNavController(),
-   viewModel: MainScreenViewModel ,
+    navController: NavHostController = rememberNavController(),
+    viewModel: MainScreenViewModel,
 ) {
 
     val movie by viewModel.selectedMovie.collectAsState()
@@ -51,21 +52,22 @@ fun MoviesDetailScreen(
     ) {
         //top row....
         Row(
-            modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically
+            modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically
         ) {
             Card(
                 modifier = Modifier
-                    .size(36.sdp)
+                    .size(32.sdp)
                     .clickable {
                         navController.popBackStack()
-                    },
-                backgroundColor = greyColor,
-                shape = RoundedCornerShape(8.sdp)
+                    }, backgroundColor = greyColor, shape = RoundedCornerShape(12.sdp)
             ) {
-                Image(painter = painterResource(R.drawable.arrow_back_icon), contentDescription = "", modifier = Modifier
-                    .fillMaxSize()
-                    .padding(6.sdp))
+                Image(
+                    painter = painterResource(R.drawable.arrow_back_icon),
+                    contentDescription = "",
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(6.sdp)
+                )
             }
             Row(
                 modifier = Modifier
@@ -73,24 +75,40 @@ fun MoviesDetailScreen(
                     .offset(x = -24.dp),
                 horizontalArrangement = Arrangement.Center
             ) {
-                TextView( text = "Movie Details", textSize = 14, isTextBold = true)
+                TextView(
+                    text = stringResource(R.string.details_title),
+                    textSize = 13,
+                    isTextBold = true
+                )
             }
 
         }
         //Movie Image
-        MoviesCard(modifier = Modifier
-            .fillMaxWidth()
-            .height(320.sdp)
-            .padding(top = 12.sdp),
-            imageUrl = "https://image.tmdb.org/t/p/w500/${movie.posterPath}")
+        MoviesCard(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(320.sdp)
+                .padding(top = 12.sdp),
+            imageUrl = "https://image.tmdb.org/t/p/w500/${movie.posterPath}"
+        )
 
-        TextView(modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 16.sdp), text = movie.title, textSize = 21, isTextBold = true)
+        TextView(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 16.sdp),
+            text = movie.title,
+            textSize = 21,
+            isTextBold = true
+        )
 
-        TextView(modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 8.sdp), text = movie.overview, textSize = 14, isTextBold = false)
+        TextView(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 8.sdp),
+            text = movie.overview,
+            textSize = 14,
+            isTextBold = false
+        )
 
     }
 

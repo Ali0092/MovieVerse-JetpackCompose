@@ -1,4 +1,4 @@
-package com.example.movieverse_compose.presentation
+package com.example.movieverse_compose.presentation.viewstates
 
 import com.example.movieverse_compose.domain.model.MoviesModel
 

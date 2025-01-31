@@ -1,12 +1,12 @@
-package com.example.movieverse_compose.presentation.components
+package com.example.movieverse_compose.presentation.nav_components
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.movieverse_compose.presentation.ui.MainScreen
-import com.example.movieverse_compose.presentation.ui.MoviesDetailScreen
+import com.example.movieverse_compose.presentation.screens.MainScreen
+import com.example.movieverse_compose.presentation.screens.MoviesDetailScreen
 import org.koin.androidx.compose.koinViewModel
 
 @Composable

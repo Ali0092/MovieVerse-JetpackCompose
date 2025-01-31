@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">MovieVerse-Compose</string>
+    <string name="home_title">MovieVerse</string>
+    <string name="upcomings_title">Upcomings</string>
+    <string name="tv_shows_title">TV Shows</string>
+    <string name="details_title">TV Shows</string>
 </resources>

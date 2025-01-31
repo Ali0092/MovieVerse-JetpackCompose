@@ -6,7 +6,7 @@ import com.example.movieverse_compose.domain.repository.MoviesRepository
 import com.example.movieverse_compose.domain.user_cases.GetPopularMoviesListUseCase
 import com.example.movieverse_compose.domain.user_cases.GetTVShowsListUseCase
 import com.example.movieverse_compose.domain.user_cases.GetUpcomingMoviesListUseCase
-import com.example.movieverse_compose.presentation.MainScreenViewModel
+import com.example.movieverse_compose.presentation.viewmodel.MainScreenViewModel
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

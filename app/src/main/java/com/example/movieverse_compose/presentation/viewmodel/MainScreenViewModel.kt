@@ -1,4 +1,4 @@
-package com.example.movieverse_compose.presentation
+package com.example.movieverse_compose.presentation.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
@@ -8,6 +8,7 @@ import com.example.movieverse_compose.domain.model.MoviesModel
 import com.example.movieverse_compose.domain.user_cases.GetPopularMoviesListUseCase
 import com.example.movieverse_compose.domain.user_cases.GetTVShowsListUseCase
 import com.example.movieverse_compose.domain.user_cases.GetUpcomingMoviesListUseCase
+import com.example.movieverse_compose.presentation.viewstates.MoviesViewState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.launchIn

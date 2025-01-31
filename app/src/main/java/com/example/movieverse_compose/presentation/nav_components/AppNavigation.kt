@@ -1,4 +1,4 @@
-package com.example.movieverse_compose.presentation.components
+package com.example.movieverse_compose.presentation.nav_components
 
 
 

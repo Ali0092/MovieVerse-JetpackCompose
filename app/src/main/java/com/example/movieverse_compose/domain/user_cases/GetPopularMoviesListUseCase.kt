@@ -1,6 +1,5 @@
 package com.example.movieverse_compose.domain.user_cases
 
-import android.util.Log
 import com.example.movieverse_compose.common.ViewState
 import com.example.movieverse_compose.data.model.toMoviesModel
 import com.example.movieverse_compose.domain.model.MoviesModel
@@ -14,8 +13,6 @@ class GetPopularMoviesListUseCase(
 
     operator fun invoke(): Flow<ViewState<MoviesModel>> = flow {
         try {
-            Log.d("CheckingPopularActivityLogs", "trying in useCase....")
-
             emit(ViewState.Loading())
             val response = moviesRepository.getPopularMovies()
             val responseModel =

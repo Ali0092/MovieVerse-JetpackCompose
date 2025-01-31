@@ -1,6 +1,5 @@
 package com.example.movieverse_compose.presentation.components
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -68,7 +67,6 @@ fun OwlCarousal(
 
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 fun Modifier.carouselTransition(page: Int, pagerState: PagerState) = graphicsLayer {
     val pageOffset =
         ((pagerState.currentPage - page) + pagerState.currentPageOffsetFraction).absoluteValue
