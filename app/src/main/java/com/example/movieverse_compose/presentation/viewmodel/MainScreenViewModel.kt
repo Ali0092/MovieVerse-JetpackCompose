@@ -10,6 +10,7 @@ import com.example.movieverse_compose.domain.user_cases.GetTVShowsListUseCase
 import com.example.movieverse_compose.domain.user_cases.GetUpcomingMoviesListUseCase
 import com.example.movieverse_compose.presentation.viewstates.MoviesViewState
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -21,13 +22,13 @@ class MainScreenViewModel(
 ) : ViewModel() {
 
     private val _popularMovies = MutableStateFlow(MoviesViewState())
-    val popularMovies: MutableStateFlow<MoviesViewState> = _popularMovies
+    val popularMovies: StateFlow<MoviesViewState> = _popularMovies
 
     private val _upcomingMovies = MutableStateFlow(MoviesViewState())
-    val upcomingMovies: MutableStateFlow<MoviesViewState> = _upcomingMovies
+    val upcomingMovies: StateFlow<MoviesViewState> = _upcomingMovies
 
     private val _tvShows = MutableStateFlow(MoviesViewState())
-    val tvShows: MutableStateFlow<MoviesViewState> = _tvShows
+    val tvShows: StateFlow<MoviesViewState> = _tvShows
 
     private val _selectedMovie = MutableStateFlow(MoviesModel.Result())
     val selectedMovie = _selectedMovie.asStateFlow()
